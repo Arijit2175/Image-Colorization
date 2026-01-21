@@ -100,6 +100,18 @@ class ImageColorizerGUI:
         label.config(image=photo)
         label.image = photo
 
+    def colorize_image(self):
+        if self.current_image is None or not self.model_loaded:
+            messagebox.showerror("Error", "Please load an image first")
+            return
+        
+        self.status_label.config(text="Colorizing... Please wait")
+        self.colorize_btn.config(state=tk.DISABLED)
+        self.root.update()
+        
+        thread = Thread(target=self._colorize_worker)
+        thread.start()
+
     
 
 
