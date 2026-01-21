@@ -5,3 +5,20 @@ This project leverages a pretrained CNN-based colorization model and applies mul
 
 ---
 
+## ✨ Features
+
+- 🖼️ **Black & White Image Colorization**
+- 🧠 **Deep Learning-based Color Prediction (OpenCV DNN)**
+- 🎛️ **Advanced Post-Processing Pipeline**
+- 🧴 Noise reduction & edge-preserving smoothing
+- 🌈 Contrast enhancement using CLAHE
+- 🎨 Controlled saturation boosting
+- 🧑 Skin tone detection & correction
+- 🔍 Advanced sharpening for fine details
+- 📈 Super-resolution upscaling
+- 🧵 Multi-threaded processing (UI never freezes)
+- 💾 Save colorized images in high quality
+- 🎨 Modern dark-themed GUI built with Tkinter
+
+---
+
