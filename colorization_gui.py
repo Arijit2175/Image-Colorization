@@ -137,6 +137,7 @@ class ImageColorizerGUI:
             colorized = cv2.cvtColor(colorized, cv2.COLOR_LAB2BGR)
             colorized = np.clip(colorized, 0, 1)
             self.colorized_image = (colorized * 255).astype("uint8")
+            self.colorized_image = self._enhance_colors(self.colorized_image)
   
             self.root.after(0, self._display_colorized_result)
             
@@ -149,6 +150,53 @@ class ImageColorizerGUI:
         self.display_image(self.colorized_image, self.colorized_label)
         self.status_label.config(text="Colorization complete!")
         self.save_btn.config(state=tk.NORMAL)
+    
+    def _enhance_colors(self, img):
+        """Apply post-processing enhancements to improve colorized image quality"""
+        
+        lab = cv2.cvtColor(img, cv2.COLOR_BGR2LAB)
+        l, a, b = cv2.split(lab)
+        clahe = cv2.createCLAHE(clipLimit=3.0, tileGridSize=(8, 8))
+        l = clahe.apply(l)
+        lab = cv2.merge([l, a, b])
+        img = cv2.cvtColor(lab, cv2.COLOR_LAB2BGR)
+        
+        hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV).astype("float32")
+        hsv[:, :, 1] = hsv[:, :, 1] * 1.2  
+        hsv[:, :, 1] = np.clip(hsv[:, :, 1], 0, 255)
+        img = cv2.cvtColor(hsv.astype("uint8"), cv2.COLOR_HSV2BGR)
+        
+        img = cv2.bilateralFilter(img, 9, 75, 75)
+        
+        img = self._correct_skin_tones(img)
+        
+        gaussian = cv2.GaussianBlur(img, (0, 0), 2.0)
+        img = cv2.addWeighted(img, 1.5, gaussian, -0.5, 0)
+        img = np.clip(img, 0, 255).astype("uint8")
+        
+        return img
+    
+    def _correct_skin_tones(self, img):
+        """Detect and enhance skin tones in the image"""
+        hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+        
+        lower_skin = np.array([0, 20, 70], dtype="uint8")
+        upper_skin = np.array([20, 255, 255], dtype="uint8")
+        
+        mask = cv2.inRange(hsv, lower_skin, upper_skin)
+        
+        kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5, 5))
+        mask = cv2.morphologyEx(mask, cv2.MORPH_CLOSE, kernel)
+        mask = cv2.morphologyEx(mask, cv2.MORPH_OPEN, kernel)
+        
+        img_hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV).astype("float32")
+        mask_normalized = mask.astype("float32") / 255.0
+        
+        img_hsv[:, :, 1] = img_hsv[:, :, 1] * (1 + 0.15 * mask_normalized)
+        img_hsv[:, :, 1] = np.clip(img_hsv[:, :, 1], 0, 255)
+        
+        img = cv2.cvtColor(img_hsv.astype("uint8"), cv2.COLOR_HSV2BGR)
+        return img
 
     def save_image(self):
         if not hasattr(self, 'colorized_image'):
