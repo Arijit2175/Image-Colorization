@@ -145,7 +145,7 @@ class ImageColorizerGUI:
             self.root.after(0, self._display_colorized_result)
             
         except Exception as e:
-            self.root.after(0, lambda: messagebox.showerror("Error", f"Colorization failed: {e}"))
+            self.root.after(0, lambda err=e: messagebox.showerror("Error", f"Colorization failed: {err}"))
         finally:
             self.root.after(0, lambda: self.colorize_btn.config(state=tk.NORMAL))
 
