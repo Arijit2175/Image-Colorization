@@ -46,4 +46,10 @@ class ImageColorizerGUI:
                                    width=15, height=2, bg="#FF9800", fg="white", font=("Arial", 10, "bold"))
         self.save_btn.pack(side=tk.LEFT, padx=5)
 
+        self.status_label = tk.Label(self.root, text="Ready to load image", font=("Arial", 10))
+        self.status_label.pack(pady=5)
+        
+        main_frame = tk.Frame(self.root)
+        main_frame.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
+
         
