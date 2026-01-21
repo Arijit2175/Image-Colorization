@@ -59,3 +59,29 @@ Image-Colorization/
 
 ---
 
+## 🚀 Setup
+
+### 1️⃣ Clone the repository
+```
+git clone "url"
+cd image-colorization-tool
+```
+
+### 2️⃣ Install dependencies
+```
+pip install -r requirements.txt
+```
+
+### 3️⃣ Download the pretrained model
+Place the following files inside the **Models/** directory:
+
+- colorization_deploy_v2.prototxt
+
+- colorization_release_v2.caffemodel
+
+- pts_in_hull.npy
+
+* ℹ️ See the References section below for official download links.
+
+---
+
