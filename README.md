@@ -121,3 +121,13 @@ This significantly reduces:
 
 ---
 
+## 🖼️ Preview (Results)
+
+### Original vs Colorized Output
+
+| Original Black & White Image | Colorized Image |
+|------------------------------|-----------------|
+| ![Original](assets/original.jpg) | ![Colorized](assets/colorized.jpg) |
+
+---
+
