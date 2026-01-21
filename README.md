@@ -127,7 +127,7 @@ This significantly reduces:
 
 | Original Black & White Image | Colorized Image |
 |------------------------------|-----------------|
-| ![Original](assets/original.jpg) | ![Colorized](assets/colorized.jpg) |
+| ![Original](assets/input.jpeg) | ![Colorized](assets/colorized_output.jpg) |
 
 ---
 
