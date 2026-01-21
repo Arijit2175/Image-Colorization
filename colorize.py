@@ -27,3 +27,6 @@ net.setInput(dnn.blobFromImage(L))
 ab_channel = net.forward()[0, :, :, :].transpose((1, 2, 0))
 ab_channel = cv2.resize(ab_channel, (img.shape[1], img.shape[0]))
 
+L = cv2.split(lab)[0]
+colorized = np.concatenate((L[:, :, np.newaxis], ab_channel), axis=2)
+
