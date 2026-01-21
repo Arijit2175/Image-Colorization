@@ -67,4 +67,23 @@ class ImageColorizerGUI:
         self.colorize_btn.config(state=tk.DISABLED)
         self.save_btn.config(state=tk.DISABLED)
 
+    def browse_image(self):
+        file_path = filedialog.askopenfilename(
+            title="Select an image",
+            filetypes=[("Image files", "*.jpg *.jpeg *.png *.bmp *.tiff"), ("All files", "*.*")]
+        )
         
+        if file_path:
+            self.current_image_path = file_path
+            self.current_image = cv2.imread(file_path)
+            
+            if self.current_image is None:
+                messagebox.showerror("Error", "Failed to load image")
+                return
+            
+            self.display_image(self.current_image, self.original_label)
+            self.status_label.config(text=f"Loaded: {os.path.basename(file_path)}")
+            self.colorize_btn.config(state=tk.NORMAL)
+
+    
+
