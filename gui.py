@@ -148,6 +148,22 @@ class ImageColorizerGUI:
         self.status_label.config(text="Colorization complete!")
         self.save_btn.config(state=tk.NORMAL)
 
+    def save_image(self):
+        if not hasattr(self, 'colorized_image'):
+            messagebox.showerror("Error", "No colorized image to save")
+            return
+        
+        file_path = filedialog.asksaveasfilename(
+            defaultextension=".jpg",
+            filetypes=[("JPEG", "*.jpg"), ("PNG", "*.png"), ("All files", "*.*")],
+            initialfile="colorized_image.jpg"
+        )
+        
+        if file_path:
+            cv2.imwrite(file_path, self.colorized_image)
+            messagebox.showinfo("Success", f"Image saved to:\n{file_path}")
+            self.status_label.config(text=f"Saved: {os.path.basename(file_path)}")
+
     
 
 
