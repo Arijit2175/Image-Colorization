@@ -19,3 +19,7 @@ pts = kernel.transpose().reshape(2, 313, 1, 1)
 net.getLayer(class8).blobs = [pts.astype("float32")]
 net.getLayer(conv8).blobs = [np.full([1, 313], 2.606, dtype="float32")]
 
+resized = cv2.resize(lab, (224, 224))
+L = cv2.split(resized)[0]
+l -= 50
+
