@@ -21,5 +21,9 @@ net.getLayer(conv8).blobs = [np.full([1, 313], 2.606, dtype="float32")]
 
 resized = cv2.resize(lab, (224, 224))
 L = cv2.split(resized)[0]
-l -= 50
+L -= 50
+
+net.setInput(dnn.blobFromImage(L))
+ab_channel = net.forward()[0, :, :, :].transpose((1, 2, 0))
+ab_channel = cv2.resize(ab_channel, (img.shape[1], img.shape[0]))
 
