@@ -165,8 +165,7 @@ class ImageColorizerGUI:
     def _enhance_colors(self, img):
         """Apply post-processing enhancements to improve colorized image quality"""
         
-        img = cv2.fastNlMeansDenoisingColored(img, None, h=10, hForFormatColor=10, 
-                                              templateWindowSize=7, searchWindowSize=21)
+        img = cv2.fastNlMeansDenoisingColored(img, None, h=10, templateWindowSize=7, searchWindowSize=21)
         
         lab = cv2.cvtColor(img, cv2.COLOR_BGR2LAB)
         l, a, b = cv2.split(lab)
