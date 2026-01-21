@@ -131,3 +131,11 @@ This significantly reduces:
 
 ---
 
+## 🧪 Known Limitations
+
+- Colors are predicted, not restored — results may vary
+- Rare objects may receive inaccurate colors
+- Works best with clear grayscale or B&W images
+
+---
+
