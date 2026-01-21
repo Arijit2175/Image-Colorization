@@ -184,5 +184,6 @@ The following visualization provides a graphical overview of the evaluation metr
 - **CLAHE – Contrast Limited Adaptive Histogram Equalization**  
   https://docs.opencv.org/master/d5/daf/tutorial_py_histogram_equalization.html
 
----
+<br>
 
+👨‍💻 **Developed By** - @Arijit2175
