@@ -42,3 +42,20 @@ This project leverages a pretrained CNN-based colorization model and applies mul
 
 ---
 
+## 📂 Project Structure
+
+```
+Image-Colorization/
+│
+├── Models/
+│ ├── colorization_deploy_v2.prototxt
+│ ├── colorization_release_v2.caffemodel
+│ └── pts_in_hull.npy
+│
+├── colorization_gui.py
+├── requirements.txt
+└── README.md
+```
+
+---
+
