@@ -52,4 +52,19 @@ class ImageColorizerGUI:
         main_frame = tk.Frame(self.root)
         main_frame.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
 
+        self.original_frame = tk.LabelFrame(main_frame, text="Original Image", font=("Arial", 11, "bold"), padx=5, pady=5)
+        self.original_frame.pack(side=tk.LEFT, fill=tk.BOTH, expand=True, padx=5)
+        
+        self.original_label = tk.Label(self.original_frame, bg="gray", width=400, height=350)
+        self.original_label.pack(fill=tk.BOTH, expand=True)
+        
+        self.colorized_frame = tk.LabelFrame(main_frame, text="Colorized Image", font=("Arial", 11, "bold"), padx=5, pady=5)
+        self.colorized_frame.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True, padx=5)
+        
+        self.colorized_label = tk.Label(self.colorized_frame, bg="gray", width=400, height=350)
+        self.colorized_label.pack(fill=tk.BOTH, expand=True)
+        
+        self.colorize_btn.config(state=tk.DISABLED)
+        self.save_btn.config(state=tk.DISABLED)
+
         
