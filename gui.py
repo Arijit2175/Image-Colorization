@@ -164,6 +164,7 @@ class ImageColorizerGUI:
             messagebox.showinfo("Success", f"Image saved to:\n{file_path}")
             self.status_label.config(text=f"Saved: {os.path.basename(file_path)}")
 
-    
-
-
+if __name__ == "__main__":
+    root = tk.Tk()
+    app = ImageColorizerGUI(root)
+    root.mainloop()
