@@ -167,22 +167,30 @@ The following visualization provides a graphical overview of the evaluation metr
 
 - **Zhang, R., Isola, P., & Efros, A. A.**  
   *Colorful Image Colorization*  
-  https://arxiv.org/abs/1603.08511
+  [https://arxiv.org/abs/1603.08511](https://arxiv.org/abs/1603.08511)
 
 - **Official Pretrained Model Repository**  
-  https://github.com/richzhang/colorization
+  [GitHub - richzhang/colorization](https://github.com/richzhang/colorization)
 
 - **OpenCV Deep Neural Network (DNN) Module**  
-  https://docs.opencv.org/master/d6/d0f/group__dnn.html
+  [OpenCV DNN Docs](https://docs.opencv.org/master/d6/d0f/group__dnn.html)
 
 - **OpenCV Image Processing Documentation**  
-  https://docs.opencv.org/master/
+  [OpenCV Docs](https://docs.opencv.org/master/)
 
 - **Non-Local Means Denoising (OpenCV)**  
-  https://docs.opencv.org/master/d5/d69/tutorial_py_non_local_means.html
+  [Tutorial: Non-Local Means Denoising](https://docs.opencv.org/master/d5/d69/tutorial_py_non_local_means.html)
 
 - **CLAHE – Contrast Limited Adaptive Histogram Equalization**  
-  https://docs.opencv.org/master/d5/daf/tutorial_py_histogram_equalization.html
+  [Tutorial: CLAHE](https://docs.opencv.org/master/d5/daf/tutorial_py_histogram_equalization.html)
+
+- **Model Files for Colorization (Caffe-based)**  
+  - **`colorization_deploy_v2.prototxt`** (network architecture)  
+    [Download Link](https://raw.githubusercontent.com/richzhang/colorization/caffe/colorization/models/colorization_deploy_v2.prototxt)  
+  - **`colorization_release_v2.caffemodel`** (pre-trained weights)  
+    [Download Link](https://storage.openvinotoolkit.org/repositories/datumaro/models/colorization/colorization_release_v2.caffemodel)  
+  - **`pts_in_hull.npy`** (cluster centers for ab channels)  
+    [Download Link](https://raw.githubusercontent.com/richzhang/colorization/caffe/colorization/resources/pts_in_hull.npy)
 
 <br>
 
