@@ -139,3 +139,26 @@ This significantly reduces:
 
 ---
 
+## 📚 References
+
+- **Zhang, R., Isola, P., & Efros, A. A.**  
+  *Colorful Image Colorization*  
+  https://arxiv.org/abs/1603.08511
+
+- **Official Pretrained Model Repository**  
+  https://github.com/richzhang/colorization
+
+- **OpenCV Deep Neural Network (DNN) Module**  
+  https://docs.opencv.org/master/d6/d0f/group__dnn.html
+
+- **OpenCV Image Processing Documentation**  
+  https://docs.opencv.org/master/
+
+- **Non-Local Means Denoising (OpenCV)**  
+  https://docs.opencv.org/master/d5/d69/tutorial_py_non_local_means.html
+
+- **CLAHE – Contrast Limited Adaptive Histogram Equalization**  
+  https://docs.opencv.org/master/d5/daf/tutorial_py_histogram_equalization.html
+
+---
+
