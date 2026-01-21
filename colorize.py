@@ -32,3 +32,8 @@ colorized = np.concatenate((L[:, :, np.newaxis], ab_channel), axis=2)
 
 colorized = (255 * colorized).astype("uint8")
 
+img = cv2.resize(img, (640, 640))
+colorized = cv2.resize(colorized, (640, 640))
+result = cv2.hconcat([img, colorized])
+cv2.imshow("Colorization", result)
+cv2.waitKey(0)
