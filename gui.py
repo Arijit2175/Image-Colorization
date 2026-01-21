@@ -112,6 +112,36 @@ class ImageColorizerGUI:
         thread = Thread(target=self._colorize_worker)
         thread.start()
 
-    
+    def _colorize_worker(self):
+        try:
+            scaled = self.current_image.astype("float32") / 255.0
+            lab = cv2.cvtColor(scaled, cv2.COLOR_BGR2LAB)
+            
+            class8 = self.net.getLayerId("class8_ab")
+            conv8 = self.net.getLayerId("conv8_313_rh")
+            pts = self.kernel.transpose().reshape(2, 313, 1, 1)
+            self.net.getLayer(class8).blobs = [pts.astype("float32")]
+            self.net.getLayer(conv8).blobs = [np.full([1, 313], 2.606, dtype="float32")]
+            
+            resized = cv2.resize(lab, (224, 224))
+            L = cv2.split(resized)[0]
+            L -= 50
+            
+            self.net.setInput(dnn.blobFromImage(L))
+            ab_channel = self.net.forward()[0, :, :, :].transpose((1, 2, 0))
+            ab_channel = cv2.resize(ab_channel, (self.current_image.shape[1], self.current_image.shape[0]))
+            
+            L = cv2.split(lab)[0]
+            colorized = np.concatenate((L[:, :, np.newaxis], ab_channel), axis=2)
+            
+            self.colorized_image = cv2.cvtColor(colorized.astype("uint8"), cv2.COLOR_LAB2BGR)
+  
+            self.root.after(0, self._display_colorized_result)
+            
+        except Exception as e:
+            self.root.after(0, lambda: messagebox.showerror("Error", f"Colorization failed: {e}"))
+        finally:
+            self.root.after(0, lambda: self.colorize_btn.config(state=tk.NORMAL))
 
+    
 
