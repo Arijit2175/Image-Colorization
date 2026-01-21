@@ -17,4 +17,17 @@ class ImageColorizerGUI:
         self.model_file = "Models/colorization_release_v2.caffemodel"
         self.pts_file = "Models/pts_in_hull.npy"
 
+        try:
+            self.net = dnn.readNetFromCaffe(self.proto_file, self.model_file)
+            self.kernel = np.load(self.pts_file)
+            self.model_loaded = True
+        except Exception as e:
+            messagebox.showerror("Error", f"Failed to load model: {e}")
+            self.model_loaded = False
+        
+        self.current_image = None
+        self.current_image_path = None
+        
+        self.create_widgets()
+
         
