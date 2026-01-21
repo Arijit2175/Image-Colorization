@@ -32,3 +32,13 @@ This project leverages a pretrained CNN-based colorization model and applies mul
 
 ---
 
+## 🛠️ Tech Stack
+
+- **Python**
+- **OpenCV (DNN module)**
+- **NumPy**
+- **Tkinter**
+- **Pillow (PIL)**
+
+---
+
