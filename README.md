@@ -131,6 +131,30 @@ This significantly reduces:
 
 ---
 
+## 📊 Model Evaluation Metrics
+
+The performance of the image colorization model was evaluated using standard image quality and perceptual similarity metrics. The following are the **average results** obtained across the evaluation dataset:
+
+| Metric | Value | Description |
+|------|------|------------|
+| **PSNR (Peak Signal-to-Noise Ratio)** | **19.86 dB** | Measures reconstruction quality; higher values indicate better fidelity |
+| **SSIM (Structural Similarity Index)** | **0.9086** | Evaluates perceptual and structural similarity (closer to 1 is better) |
+| **MSE (Mean Squared Error)** | **933.44** | Measures average pixel-wise error; lower is better |
+| **Color Correlation** | **0.9610** | Indicates how closely the predicted colors match the ground truth |
+
+### 📈 Metrics Visualization
+
+The following visualization provides a graphical overview of the evaluation metrics, helping to better understand the model’s performance across different quality measures:
+
+![Model Evaluation Metrics](assets/metrics_visualization.png)
+
+### 📌 Interpretation
+- High **SSIM** and **Color Correlation** values indicate strong preservation of image structure and realistic color distribution.
+- The **PSNR** value aligns with typical learning-based colorization models, which favor perceptual realism over pixel-level accuracy.
+- Overall, the metrics confirm that the model produces visually coherent and perceptually convincing colorized images.
+
+---
+
 ## 🧪 Known Limitations
 
 - Colors are predicted, not restored — results may vary
