@@ -6,3 +6,6 @@ proto_file = "Models/colorization_deploy_v2.prototxt"
 model_file = "Models/colorization_release_v2.caffemodel"
 pts_file = "Models/pts_in_hull.npy"
 
+net = dnn.readNetFromCaffe(proto_file, model_file)
+pts = np.load(pts_file)
+
