@@ -85,3 +85,39 @@ Place the following files inside the **Models/** directory:
 
 ---
 
+## ▶️ Usage
+
+Run the application:
+
+```
+python colorization_gui.py
+```
+
+### Workflow
+
+1) 📁 Click Browse Image
+2) ✨ Click Colorize
+3) 🎉 Preview the colorized output
+4) 💾 Save the result
+
+---
+
+## 🎯 Post-Processing Pipeline
+
+To improve realism, the following enhancements are applied after colorization:
+1) 🔇 Noise reduction (Non-local Means)
+2) 🌗 Contrast enhancement (CLAHE on L channel)
+3) 🌈 Saturation boost (HSV space)
+4) 🧠 Edge-preserving smoothing (Bilateral Filter)
+5) 🧑 Skin tone detection & correction
+6) 🔍 Advanced sharpening
+7) 📈 Super-resolution upscaling
+
+This significantly reduces:
+- Washed-out colors
+- Color bleeding
+- Flat contrast
+- Unrealistic skin tones
+
+---
+
