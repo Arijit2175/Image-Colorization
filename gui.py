@@ -85,5 +85,21 @@ class ImageColorizerGUI:
             self.status_label.config(text=f"Loaded: {os.path.basename(file_path)}")
             self.colorize_btn.config(state=tk.NORMAL)
 
+    def display_image(self, cv_image, label):
+        rgb_image = cv2.cvtColor(cv_image, cv2.COLOR_BGR2RGB)
+        
+        h, w = rgb_image.shape[:2]
+        max_width, max_height = 380, 320
+        scale = min(max_width / w, max_height / h)
+        new_w, new_h = int(w * scale), int(h * scale)
+        resized = cv2.resize(rgb_image, (new_w, new_h), interpolation=cv2.INTER_AREA)
+        
+        pil_image = Image.fromarray(resized)
+        photo = ImageTk.PhotoImage(pil_image)
+        
+        label.config(image=photo)
+        label.image = photo
+
     
+
 
