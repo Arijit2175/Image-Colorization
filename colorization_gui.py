@@ -137,6 +137,9 @@ class ImageColorizerGUI:
             colorized = cv2.cvtColor(colorized, cv2.COLOR_LAB2BGR)
             colorized = np.clip(colorized, 0, 1)
             self.colorized_image = (colorized * 255).astype("uint8")
+            
+            self.colorized_image = self._upscale_image(self.colorized_image)
+            
             self.colorized_image = self._enhance_colors(self.colorized_image)
   
             self.root.after(0, self._display_colorized_result)
@@ -151,8 +154,19 @@ class ImageColorizerGUI:
         self.status_label.config(text="Colorization complete!")
         self.save_btn.config(state=tk.NORMAL)
     
+    def _upscale_image(self, img):
+        """Apply super-resolution upscaling to improve image quality"""
+        h, w = img.shape[:2]
+        
+        upscaled = cv2.resize(img, (w * 2, h * 2), interpolation=cv2.INTER_LANCZOS4)
+        
+        return upscaled
+    
     def _enhance_colors(self, img):
         """Apply post-processing enhancements to improve colorized image quality"""
+        
+        img = cv2.fastNlMeansDenoisingColored(img, None, h=10, hForFormatColor=10, 
+                                              templateWindowSize=7, searchWindowSize=21)
         
         lab = cv2.cvtColor(img, cv2.COLOR_BGR2LAB)
         l, a, b = cv2.split(lab)
@@ -170,11 +184,28 @@ class ImageColorizerGUI:
         
         img = self._correct_skin_tones(img)
         
-        gaussian = cv2.GaussianBlur(img, (0, 0), 2.0)
-        img = cv2.addWeighted(img, 1.5, gaussian, -0.5, 0)
-        img = np.clip(img, 0, 255).astype("uint8")
+        img = self._advanced_sharpen(img)
         
         return img
+    
+    def _advanced_sharpen(self, img):
+        """Apply advanced sharpening to enhance details without over-sharpening"""
+        gaussian = cv2.GaussianBlur(img, (0, 0), 2.0)
+        highpass = cv2.subtract(img, gaussian)
+        highpass = cv2.add(highpass, 128)
+        
+        sharpened = cv2.addWeighted(img, 1.2, highpass, -0.2, 0)
+        
+        kernel = np.array([[-1, -1, -1],
+                          [-1,  9, -1],
+                          [-1, -1, -1]]) / 9.0
+        
+        detailed = cv2.filter2D(img, -1, kernel)
+        
+        result = cv2.addWeighted(sharpened, 0.7, detailed, 0.3, 0)
+        result = np.clip(result, 0, 255).astype("uint8")
+        
+        return result
     
     def _correct_skin_tones(self, img):
         """Detect and enhance skin tones in the image"""
