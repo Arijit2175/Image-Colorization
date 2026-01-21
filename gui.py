@@ -30,4 +30,20 @@ class ImageColorizerGUI:
         
         self.create_widgets()
 
+    def create_widgets(self):
+        top_frame = tk.Frame(self.root)
+        top_frame.pack(pady=10)
+        
+        self.browse_btn = tk.Button(top_frame, text="Browse Image", command=self.browse_image, 
+                                     width=15, height=2, bg="#4CAF50", fg="white", font=("Arial", 10, "bold"))
+        self.browse_btn.pack(side=tk.LEFT, padx=5)
+        
+        self.colorize_btn = tk.Button(top_frame, text="Colorize", command=self.colorize_image, 
+                                       width=15, height=2, bg="#2196F3", fg="white", font=("Arial", 10, "bold"))
+        self.colorize_btn.pack(side=tk.LEFT, padx=5)
+        
+        self.save_btn = tk.Button(top_frame, text="Save Result", command=self.save_image, 
+                                   width=15, height=2, bg="#FF9800", fg="white", font=("Arial", 10, "bold"))
+        self.save_btn.pack(side=tk.LEFT, padx=5)
+
         
