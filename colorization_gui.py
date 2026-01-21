@@ -10,8 +10,16 @@ from threading import Thread
 class ImageColorizerGUI:
     def __init__(self, root):
         self.root = root
-        self.root.title("Image Colorization Tool")
-        self.root.geometry("1200x700")
+        self.root.title("🎨 Image Colorization Tool")
+        self.root.geometry("1500x700")
+        self.root.configure(bg="#0f1419")
+        
+        self.bg_color = "#0f1419"
+        self.primary_color = "#00d4ff"
+        self.secondary_color = "#1e88e5"
+        self.accent_color = "#ff6b6b"
+        self.text_color = "#ffffff"
+        self.frame_bg = "#1a1f2e"
         
         self.proto_file = "Models/colorization_deploy_v2.prototxt"
         self.model_file = "Models/colorization_release_v2.caffemodel"
@@ -31,38 +39,79 @@ class ImageColorizerGUI:
         self.create_widgets()
 
     def create_widgets(self):
-        top_frame = tk.Frame(self.root)
-        top_frame.pack(pady=10)
+        header_frame = tk.Frame(self.root, bg=self.frame_bg, height=100)
+        header_frame.pack(fill=tk.X, padx=0, pady=0)
         
-        self.browse_btn = tk.Button(top_frame, text="Browse Image", command=self.browse_image, 
-                                     width=15, height=2, bg="#4CAF50", fg="white", font=("Arial", 10, "bold"))
-        self.browse_btn.pack(side=tk.LEFT, padx=5)
+        title_label = tk.Label(header_frame, text="🎨 Image Colorization Tool", 
+                              font=("Arial", 24, "bold"), fg=self.primary_color, bg=self.frame_bg)
+        title_label.pack(pady=15)
         
-        self.colorize_btn = tk.Button(top_frame, text="Colorize", command=self.colorize_image, 
-                                       width=15, height=2, bg="#2196F3", fg="white", font=("Arial", 10, "bold"))
-        self.colorize_btn.pack(side=tk.LEFT, padx=5)
+        subtitle_label = tk.Label(header_frame, text="Transform B&W photos to vibrant color", 
+                                 font=("Arial", 10), fg="#888888", bg=self.frame_bg)
+        subtitle_label.pack()
         
-        self.save_btn = tk.Button(top_frame, text="Save Result", command=self.save_image, 
-                                   width=15, height=2, bg="#FF9800", fg="white", font=("Arial", 10, "bold"))
-        self.save_btn.pack(side=tk.LEFT, padx=5)
+        btn_frame = tk.Frame(self.root, bg=self.frame_bg)
+        btn_frame.pack(fill=tk.X, padx=20, pady=20)
+        
+        self.browse_btn = tk.Button(btn_frame, text="📁 Browse Image", command=self.browse_image, 
+                                     width=18, height=3, bg=self.secondary_color, fg=self.text_color, 
+                                     font=("Arial", 11, "bold"), cursor="hand2", relief=tk.FLAT,
+                                     activebackground="#1565c0", activeforeground=self.text_color)
+        self.browse_btn.pack(side=tk.LEFT, padx=10)
+        
+        self.colorize_btn = tk.Button(btn_frame, text="✨ Colorize", command=self.colorize_image, 
+                                       width=18, height=3, bg=self.primary_color, fg="#000000", 
+                                       font=("Arial", 11, "bold"), cursor="hand2", relief=tk.FLAT,
+                                       activebackground="#00b8d4", activeforeground="#000000")
+        self.colorize_btn.pack(side=tk.LEFT, padx=10)
+        
+        self.save_btn = tk.Button(btn_frame, text="💾 Save Result", command=self.save_image, 
+                                   width=18, height=3, bg=self.accent_color, fg=self.text_color, 
+                                   font=("Arial", 11, "bold"), cursor="hand2", relief=tk.FLAT,
+                                   activebackground="#e55039", activeforeground=self.text_color)
+        self.save_btn.pack(side=tk.LEFT, padx=10)
 
-        self.status_label = tk.Label(self.root, text="Ready to load image", font=("Arial", 10))
-        self.status_label.pack(pady=5)
+        status_frame = tk.Frame(self.root, bg=self.frame_bg, height=40)
+        status_frame.pack(fill=tk.X, padx=20, pady=(0, 15))
         
-        main_frame = tk.Frame(self.root)
-        main_frame.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
-
-        self.original_frame = tk.LabelFrame(main_frame, text="Original Image", font=("Arial", 11, "bold"), padx=5, pady=5)
-        self.original_frame.pack(side=tk.LEFT, fill=tk.BOTH, expand=True, padx=5)
+        self.status_label = tk.Label(status_frame, text="🟢 Ready to load image", 
+                                    font=("Arial", 10), fg=self.primary_color, bg=self.frame_bg)
+        self.status_label.pack(anchor=tk.W)
         
-        self.original_label = tk.Label(self.original_frame, bg="gray", width=400, height=350)
-        self.original_label.pack(fill=tk.BOTH, expand=True)
+        self.progress_frame = tk.Frame(status_frame, bg="#333333", height=3)
+        self.progress_frame.pack(fill=tk.X, pady=(5, 0))
         
-        self.colorized_frame = tk.LabelFrame(main_frame, text="Colorized Image", font=("Arial", 11, "bold"), padx=5, pady=5)
-        self.colorized_frame.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True, padx=5)
+        self.progress_bar = tk.Frame(self.progress_frame, bg=self.primary_color, height=3)
+        self.progress_bar.pack(side=tk.LEFT, fill=tk.NONE)
         
-        self.colorized_label = tk.Label(self.colorized_frame, bg="gray", width=400, height=350)
-        self.colorized_label.pack(fill=tk.BOTH, expand=True)
+        content_frame = tk.Frame(self.root, bg=self.bg_color)
+        content_frame.pack(fill=tk.BOTH, expand=True, padx=20, pady=10)
+        
+        original_header = tk.Label(content_frame, text="📷 Original Image", 
+                                  font=("Arial", 12, "bold"), fg=self.primary_color, bg=self.bg_color)
+        original_header.pack(side=tk.LEFT, fill=tk.X, padx=(0, 10))
+        
+        self.original_frame = tk.Frame(content_frame, bg=self.frame_bg, relief=tk.FLAT, bd=2)
+        self.original_frame.pack(side=tk.LEFT, fill=tk.BOTH, expand=True, padx=(0, 15))
+        
+        self.original_label = tk.Label(self.original_frame, bg="#2a2f3a", width=400, height=350)
+        self.original_label.pack(fill=tk.BOTH, expand=True, padx=3, pady=3)
+        
+        arrow_frame = tk.Frame(content_frame, bg=self.bg_color, width=40)
+        arrow_frame.pack(side=tk.LEFT)
+        arrow_label = tk.Label(arrow_frame, text="➜", font=("Arial", 30), 
+                              fg=self.primary_color, bg=self.bg_color)
+        arrow_label.pack()
+        
+        colorized_header = tk.Label(content_frame, text="🎨 Colorized Result", 
+                                   font=("Arial", 12, "bold"), fg=self.primary_color, bg=self.bg_color)
+        colorized_header.pack(side=tk.LEFT, fill=tk.X, padx=(10, 0))
+        
+        self.colorized_frame = tk.Frame(content_frame, bg=self.frame_bg, relief=tk.FLAT, bd=2)
+        self.colorized_frame.pack(side=tk.LEFT, fill=tk.BOTH, expand=True, padx=(15, 0))
+        
+        self.colorized_label = tk.Label(self.colorized_frame, bg="#2a2f3a", width=400, height=350)
+        self.colorized_label.pack(fill=tk.BOTH, expand=True, padx=3, pady=3)
         
         self.colorize_btn.config(state=tk.DISABLED)
         self.save_btn.config(state=tk.DISABLED)
@@ -82,14 +131,14 @@ class ImageColorizerGUI:
                 return
             
             self.display_image(self.current_image, self.original_label)
-            self.status_label.config(text=f"Loaded: {os.path.basename(file_path)}")
+            self.status_label.config(text=f"✅ Loaded: {os.path.basename(file_path)}", fg=self.primary_color)
             self.colorize_btn.config(state=tk.NORMAL)
 
     def display_image(self, cv_image, label):
         rgb_image = cv2.cvtColor(cv_image, cv2.COLOR_BGR2RGB)
         
         h, w = rgb_image.shape[:2]
-        max_width, max_height = 380, 320
+        max_width, max_height = 500, 400
         scale = min(max_width / w, max_height / h)
         new_w, new_h = int(w * scale), int(h * scale)
         resized = cv2.resize(rgb_image, (new_w, new_h), interpolation=cv2.INTER_AREA)
@@ -105,7 +154,7 @@ class ImageColorizerGUI:
             messagebox.showerror("Error", "Please load an image first")
             return
         
-        self.status_label.config(text="Colorizing... Please wait")
+        self.status_label.config(text="⏳ Colorizing... Please wait", fg="#ffb700")
         self.colorize_btn.config(state=tk.DISABLED)
         self.root.update()
         
@@ -151,7 +200,7 @@ class ImageColorizerGUI:
 
     def _display_colorized_result(self):
         self.display_image(self.colorized_image, self.colorized_label)
-        self.status_label.config(text="Colorization complete!")
+        self.status_label.config(text="🎉 Colorization complete!", fg="#00ff88")
         self.save_btn.config(state=tk.NORMAL)
     
     def _upscale_image(self, img):
@@ -241,8 +290,8 @@ class ImageColorizerGUI:
         
         if file_path:
             cv2.imwrite(file_path, self.colorized_image)
-            messagebox.showinfo("Success", f"Image saved to:\n{file_path}")
-            self.status_label.config(text=f"Saved: {os.path.basename(file_path)}")
+            messagebox.showinfo("Success", f"✅ Image saved to:\n{file_path}")
+            self.status_label.config(text=f"💾 Saved: {os.path.basename(file_path)}", fg=self.primary_color)
 
 if __name__ == "__main__":
     root = tk.Tk()
