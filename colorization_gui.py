@@ -124,17 +124,19 @@ class ImageColorizerGUI:
             self.net.getLayer(conv8).blobs = [np.full([1, 313], 2.606, dtype="float32")]
             
             resized = cv2.resize(lab, (224, 224))
-            L = cv2.split(resized)[0]
+            L = resized[:, :, 0]
             L -= 50
             
             self.net.setInput(dnn.blobFromImage(L))
-            ab_channel = self.net.forward()[0, :, :, :].transpose((1, 2, 0))
-            ab_channel = cv2.resize(ab_channel, (self.current_image.shape[1], self.current_image.shape[0]))
+            ab = self.net.forward()[0].transpose((1, 2, 0))
+            ab = cv2.resize(ab, (self.current_image.shape[1], self.current_image.shape[0]))
             
-            L = cv2.split(lab)[0]
-            colorized = np.concatenate((L[:, :, np.newaxis], ab_channel), axis=2)
+            L = lab[:, :, 0]
+            colorized = np.concatenate((L[:, :, np.newaxis], ab), axis=2)
             
-            self.colorized_image = cv2.cvtColor(colorized.astype("uint8"), cv2.COLOR_LAB2BGR)
+            colorized = cv2.cvtColor(colorized, cv2.COLOR_LAB2BGR)
+            colorized = np.clip(colorized, 0, 1)
+            self.colorized_image = (colorized * 255).astype("uint8")
   
             self.root.after(0, self._display_colorized_result)
             
