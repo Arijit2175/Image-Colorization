@@ -30,3 +30,5 @@ ab_channel = cv2.resize(ab_channel, (img.shape[1], img.shape[0]))
 L = cv2.split(lab)[0]
 colorized = np.concatenate((L[:, :, np.newaxis], ab_channel), axis=2)
 
+colorized = (255 * colorized).astype("uint8")
+
