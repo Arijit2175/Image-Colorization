@@ -143,5 +143,11 @@ class ImageColorizerGUI:
         finally:
             self.root.after(0, lambda: self.colorize_btn.config(state=tk.NORMAL))
 
+    def _display_colorized_result(self):
+        self.display_image(self.colorized_image, self.colorized_label)
+        self.status_label.config(text="Colorization complete!")
+        self.save_btn.config(state=tk.NORMAL)
+
     
+
 
