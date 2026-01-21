@@ -22,3 +22,13 @@ This project leverages a pretrained CNN-based colorization model and applies mul
 
 ---
 
+## 🧠 Methodology
+
+1. Input image is converted from **BGR → LAB color space**
+2. **L channel (grayscale)** is fed to a pretrained CNN
+3. Model predicts **A & B color channels**
+4. LAB image is reconstructed and converted back to BGR
+5. Post-processing improves realism and perceptual quality
+
+---
+
